@@ -1,0 +1,25 @@
+author: david20041024
+date: 2026-03-09
+question: |
+  在討論GC時會存在某些trade-off，像是對utilization採用greedy的方式，確實能讓WA降到最低
+  ，但同時在壽命與page年齡上並不是最優情況。若有個公式`Score = w1*u+w2*age_n+w3*(1-wear_n)`，
+  其中u是utilization，age是page age/當前最大age，wear是erase的次數/當前最大erase的次數，此外當下Score最高者會選為victim，並設u=0、wear+1、age=0，並且演算法在意前期對utilization，而後期在意age與wear，所以經過age=1的時間間隔，w1會下降0.1，w2與w3各上升0.05。時間t0時，w1=0.8,w2=0.1,w3=0.1，
+  存在Block A，u=0.9，age=1，wear=1；Block B，u=0.7，age=2，wear=2；Block C，u=0.5，age=3，wear=3，請找尋一個victim。過了age=2的時間間隔後，令上一個victim的u=0.8，再過了age=3的時間間隔後，需要再找尋一個victim，請問在t0與t0+5時，分別會選擇哪個block作為victim？（如果block的u=0時，不會累加age。）
+
+options:
+  - text: "A,A"
+    explanation: |
+      在t0時，會發現age與wear的數值對稱，會導致Score後面的分數都一樣，所以只差在u，所以選u最大者，即Block A作為victim，並且使Block A的wear=2,age=0。過了age=2的時間間隔後，Block A的age開始計算，u會變成0.8。在t0+5時，Block A，u=0.8，age=3，wear=2；Block B，u=0.7，age=7，wear=2；Block C，u=0.5，age=8，wear=3，並且w1=0.3,w2=0.35,w3=0.35。
+      詳細算出Score_A=0.3*0.8+0.35*3/8+0.35*(1-2/3)=0.4879；Score_B=0.3*0.7+0.35*7/8+0.35*(1-2/3)=0.6329；Score_C=0.3*0.5+0.35*8/8+0.35*(1-3/3)=0.5，所以選Block B作為victim。
+  - text: "A,B"
+    correct: true
+    explanation: |
+      在t0時，會發現age與wear的數值對稱，會導致Score後面的分數都一樣，所以只差在u，所以選u最大者，即Block A作為victim，並且使Block A的wear=2,age=0。過了age=2的時間間隔後，Block A的age開始計算，u會變成0.8。在t0+5時，Block A，u=0.8，age=3，wear=2；Block B，u=0.7，age=7，wear=2；Block C，u=0.5，age=8，wear=3，並且w1=0.3,w2=0.35,w3=0.35。
+      詳細算出Score_A=0.3*0.8+0.35*3/8+0.35*(1-2/3)=0.4879；Score_B=0.3*0.7+0.35*7/8+0.35*(1-2/3)=0.6329；Score_C=0.3*0.5+0.35*8/8+0.35*(1-3/3)=0.5，所以選Block B作為victim。
+    explanation: |
+      在t0時，會發現age與wear的數值對稱，會導致Score後面的分數都一樣，所以只差在u，所以選u最大者，即Block A作為victim，並且使Block A的wear=2,age=0。過了age=2的時間間隔後，Block A的age開始計算，u會變成0.8。在t0+5時，Block A，u=0.8，age=3，wear=2；Block B，u=0.7，age=7，wear=2；Block C，u=0.5，age=8，wear=3，並且w1=0.3,w2=0.35,w3=0.35。
+      詳細算出Score_A=0.3*0.8+0.35*3/8+0.35*(1-2/3)=0.4879；Score_B=0.3*0.7+0.35*7/8+0.35*(1-2/3)=0.6329；Score_C=0.3*0.5+0.35*8/8+0.35*(1-3/3)=0.5，所以選Block B作為victim。
+  - text: "B,A"
+    explanation: |
+      在t0時，會發現age與wear的數值對稱，會導致Score後面的分數都一樣，所以只差在u，所以選u最大者，即Block A作為victim，並且使Block A的wear=2,age=0。過了age=2的時間間隔後，Block A的age開始計算，u會變成0.8。在t0+5時，Block A，u=0.8，age=3，wear=2；Block B，u=0.7，age=7，wear=2；Block C，u=0.5，age=8，wear=3，並且w1=0.3,w2=0.35,w3=0.35。
+      詳細算出Score_A=0.3*0.8+0.35*3/8+0.35*(1-2/3)=0.4879；Score_B=0.3*0.7+0.35*7/8+0.35*(1-2/3)=0.6329；Score_C=0.3*0.5+0.35*8/8+0.35*(1-3/3)=0.5，所以選Block B作為victim。
