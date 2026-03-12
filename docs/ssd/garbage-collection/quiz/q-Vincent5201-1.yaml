@@ -12,8 +12,10 @@ question: |
 options:
   - text: "Block_0"
     explanation: |
+    最終狀態 Block_0 的 Bit 為 0，但不是選到他。
   - text: "Block_1"
     explanation: |
+    最終狀態 Block_1 的 Bit 為 0，但不是選到他。
   - text: "Block_2"
     correct: true
     explanation: |
@@ -21,4 +23,5 @@ options:
       最後會繞一圈回來選到 Block_2。
   - text: "Block_3"
     explanation: |
+    最終狀態 Block_3 的 Bit 為 0，但不是選到他。
 
