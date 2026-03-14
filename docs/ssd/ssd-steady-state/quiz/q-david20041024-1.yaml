@@ -1,0 +1,19 @@
+author: david20041024
+date: 2026-03-14
+question: |
+  在比較QLC與SLC時，可以發現除了價格上的不同，也能發現許多地方也存在差異。
+  請問，下列何者正確？
+options:
+  - text: "在QLC SSD中，SLC Cache是特定使用製成昂貴的SSD Cell"
+    explanation: |
+      錯誤，通常QLC SSD的SLC Cache是使用QLC Cell來模擬SLC的行為，透過控制器的演算法來管理這些Cell的狀態，以提供更快的寫入速度。因此，SLC Cache並不需要使用特定製成昂貴的SSD Cell。
+  - text: "SLC SSD需要更多的OP空間，以應對GC的需求"
+    explanation: |
+      錯誤，QLC SSD更需要OP空間，以此降低WAF，來延長壽命。
+  - text: "在同樣1TB的規格下，QLC SSD的OOB空間通常比SLC SSD更大"
+    correct: true
+    explanation: |
+      正確，因為QLC SSD需要更強大的錯誤更正能力來應對較高的錯誤率，因此通常會配置更多的OOB空間來存儲ECC資訊，以確保資料的完整性和可靠性。
+  - text: "QLC SSD因為反覆打電壓，反而提升了Retention time"
+    explanation: |
+      錯誤，QLC SSD的Retention time通常比SLC SSD更短，因為QLC Cell需要管理更多的電壓層級，這使得它們更容易受到電荷泄漏和干擾的影響，從而降低了資料的保持時間。
