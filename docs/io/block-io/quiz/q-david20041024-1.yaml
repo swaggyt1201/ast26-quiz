@@ -1,0 +1,34 @@
+author: david20041024
+date: 2026-03-16
+question: |
+  你有一個 SSD，其規格與系統環境如下：
+  - Bandwidth 傳輸上限：1.5 GB/s。
+  - CPU 中斷處理能力：每秒約 380K 次（超過此閾值將切換為 Polling 模式以避免 Interrupt Storm）。
+  - 計算假設：1GB=1024*1024KB，且 IOPS 上限計算公式為 Bandwidth / IO Size。
+
+  實驗包含兩個連續操作：
+  1. 操作 1：隨機 4 KB 讀取 (Random 4 KB Read)
+  2. 操作 2：順序 256 KB 寫入 (Sequential 256 KB Write)
+
+  請問該 SSD 的「最大可能 IOPS」最接近多少，以及這兩個操作分別會觸發哪種 CPU 模式？
+
+options:
+  - text: "393K IOPS；操作 1: Polling 模式；操作 2: Interrupt 模式"
+    correct: true
+    explanation: |
+      正確。
+      1. 最大 IOPS 通常發生在最小的 IO Size (4KB)。計算為 (1.5 * 1024 * 1024) / 4 = 393,216 IOPS (約 393K)。
+      2. 操作 1 的 393K > CPU 閾值 380K，故觸發 Polling 模式。
+      3. 操作 2 (256KB) 的 IOPS 為 (1.5 * 1024 * 1024) / 256 = 6,144 (約 6.1K)，低於 380K，故維持 Interrupt 模式。
+  - text: "393K IOPS；操作 1: Interrupt 模式；操作 2: Interrupt 模式"
+    explanation: |
+      錯誤。
+      操作 1 的預期 IOPS (393K) 已超過 CPU 處理中斷的上限 (380K)，系統會切換至 Polling 模式。
+  - text: "375K IOPS；操作 1: Polling 模式；操作 2: Interrupt 模式"
+    explanation: |
+      錯誤。
+      375K 是錯誤地使用 1000 作為換算基底 (1.5G / 4K = 375,000)，在作業系統與記憶體系統中應使用 1024。
+  - text: "6.1K IOPS；操作 1: Interrupt 模式；操作 2: Interrupt 模式"
+    explanation: |
+      錯誤。
+      6.1K 是大數據塊 (256KB) 下的頻寬表現。題目詢問的是「最大可能 IOPS」，應以小數據塊 (4KB) 計算，且操作 1 的高 IOPS 會導致模式切換。
